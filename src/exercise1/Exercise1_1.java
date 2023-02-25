@@ -3,10 +3,8 @@ package exercise1;
 import edu.princeton.cs.algs4.*;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public class Exercise1_1 {
     public static void exercise1_1_3() {
@@ -65,7 +63,7 @@ public class Exercise1_1 {
 
     public static int exercise1_1_14(int N) {
         if (N < 1) {
-            throw new RuntimeException();
+            throw new IllegalArgumentException();
         }
         int x = 0;
         int y = 1;
@@ -176,7 +174,7 @@ public class Exercise1_1 {
         StdOut.println(Euclid(1111111, 1234567));
     }
 
-    public static int Euclid(int p, int q) {
+    private static int Euclid(int p, int q) {
         StdOut.println("p=" + p + " q=" + q);
         if (q == 0) return p;
         int r = p % q;
