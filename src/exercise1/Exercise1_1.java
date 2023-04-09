@@ -220,7 +220,7 @@ public class Exercise1_1 {
     }
 
     public static void exercise1_1_29() {
-        String path = "exercise1/tinyT.txt";
+        String path = "algs4-data/tinyT.txt";
         int[] whitelist = new In(path).readAllInts();
         Arrays.sort(whitelist);
         StdOut.println(rank1_1_29(77, whitelist));
@@ -499,7 +499,7 @@ public class Exercise1_1 {
 
     public static void exercise1_1_38() {
         int key = 54467079;
-        int[] arr = new In("exercise1/largeT.txt").readAllInts();
+        int[] arr = new In("algs4-data/largeT.txt").readAllInts();
 
         StdOut.println("BruteForceSearch:");
         Stopwatch stopwatch = new Stopwatch();
@@ -611,17 +611,17 @@ public class Exercise1_1 {
 
 //        exercise1_1_22();
 
-//        String[] args1_1_23 = {"exercise1/tinyW.txt", "+", "exercise1/tinyT.txt"};
+//        String[] args1_1_23 = {"algs4-data/tinyW.txt", "+", "algs4-data/tinyT.txt"};
 //        exercise1_1_23(args1_1_23);
 //        StdOut.println();
-//        args1_1_23 = new String[]{"exercise1/tinyW.txt", "-", "exercise1/tinyT.txt"};
+//        args1_1_23 = new String[]{"algs4-data/tinyW.txt", "-", "algs4-data/tinyT.txt"};
 //        exercise1_1_23(args1_1_23);
 
 //        exercise1_1_24();
 
 //        exercise1_1_27();
 
-//        String[] args1_1_28 = {"exercise1/tinyW.txt"};
+//        String[] args1_1_28 = {"algs4-data/tinyW.txt"};
 //        exercise1_1_28(args1_1_28);
 
 //        exercise1_1_29();

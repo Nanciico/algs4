@@ -118,7 +118,7 @@ public class Exercise1_2 {
 
     public static void exercise1_2_9() {
         int key = 23;
-        int[] arr = new In("/exercise1/tinyT.txt").readAllInts();
+        int[] arr = new In("algs4-data/tinyT.txt").readAllInts();
         Arrays.sort(arr);
         Counter counter = new Counter("counter");
         int index = rank1_2_9(key, arr, counter);
@@ -378,7 +378,7 @@ public class Exercise1_2 {
     }
 
     public static void exercise1_2_15() {
-        String name = "/exercise1/tinyT.txt";
+        String name = "algs4-data/tinyT.txt";
         int[] ints = readInts(name);
         for (int i = 0; i < ints.length; i++) {
             StdOut.print(ints[i] + " ");
