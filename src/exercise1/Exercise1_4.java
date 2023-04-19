@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.*;
 import java.util.Arrays;
 
 public class Exercise1_4 {
-    public static void exercise1_4_2() {
+    public void exercise1_4_2() {
         In in = new In("algs4-data/1Kints.txt");
         int[] array = in.readAllInts();
         int n = array.length;
@@ -21,7 +21,7 @@ public class Exercise1_4 {
         StdOut.println("Count=" + count);
     }
 
-    public static void exercise1_4_8() {
+    public void exercise1_4_8() {
         In in = new In("algs4-data/tinyT.txt");
         int[] array = in.readAllInts();
         Arrays.sort(array);
@@ -36,16 +36,16 @@ public class Exercise1_4 {
         StdOut.println("Count=" + count);
     }
 
-    public static void exercise1_4_10() {
+    public void exercise1_4_10() {
         int[] array = new int[]{1, 1, 2, 2, 3, 3, 3, 4, 5, 5, 6, 7, 7};
         StdOut.println(rank(array, 1));
     }
 
-    private static int rank(int[] array, int key) {
+    private int rank(int[] array, int key) {
         return rank(array, key, 0, array.length - 1);
     }
 
-    private static int rank(int[] array, int key, int lo, int hi) {
+    private int rank(int[] array, int key, int lo, int hi) {
         while (lo <= hi) {
             int mid = lo + ((hi - lo) >> 1);
             if (key <= array[mid]) {
@@ -58,83 +58,19 @@ public class Exercise1_4 {
         return array[lo] == key ? lo : -1;
     }
 
-    public static void exercise1_4_11() {
+    public void exercise1_4_11() {
         int[] array = new int[]{1, 1, 2, 2, 3, 3, 3, 4, 5, 5, 6, 7, 7};
         StaticSETofInts set = new StaticSETofInts(array);
         StdOut.println(set.howMany(3));
     }
 
-    private static class StaticSETofInts {
-        private final int[] a;
-
-        public StaticSETofInts(int[] keys) {
-            a = new int[keys.length];
-            // defensive copy
-            System.arraycopy(keys, 0, a, 0, keys.length);
-            Arrays.sort(a);
-        }
-
-        public boolean contains(int key) {
-            return rank(key) != -1;
-        }
-
-        public int howMany(int key) {
-            int low = rankLow(key);
-            int high = rankHigh(key);
-            if (low == -1 || high == -1) return -1;
-            return high - low + 1;
-        }
-
-        private int rankLow(int key) {
-            int lo = 0;
-            int hi = a.length - 1;
-            while (lo <= hi) {
-                int mid = lo + ((hi - lo) >> 1);
-                if (key <= a[mid]) {
-                    hi = mid - 1;
-                } else {
-                    lo = mid + 1;
-                }
-            }
-            if (lo == a.length) return -1;
-            return a[lo] == key ? lo : -1;
-        }
-
-        private int rankHigh(int key) {
-            int lo = 0;
-            int hi = a.length - 1;
-            while (lo <= hi) {
-                int mid = lo + ((hi - lo) >> 1);
-                if (key >= a[mid]) {
-                    lo = mid + 1;
-                } else {
-                    hi = mid - 1;
-                }
-            }
-            if (hi == -1) return -1;
-            return a[hi] == key ? hi : -1;
-        }
-
-        private int rank(int key) {  // Binary search.
-            int lo = 0;
-            int hi = a.length - 1;
-            while (lo <= hi) {  // Key is in a[lo..hi] or not present.
-                int mid = lo + (hi - lo) / 2;
-                if (key < a[mid]) hi = mid - 1;
-                else if (key > a[mid]) lo = mid + 1;
-                else return mid;
-            }
-            return -1;
-        }
-    }
-
-    private static void exercise1_4_12() {
+    private void exercise1_4_12() {
         int[] array1 = new int[]{0, 2, 3, 5, 6, 7};
         int[] array2 = new int[]{2, 4, 5, 8, 8, 9};
         exercise1_4_12(array1, array2, 6);
     }
 
-    private static void exercise1_4_12(int[] array1, int[] array2, int N) {
+    private void exercise1_4_12(int[] array1, int[] array2, int N) {
         assert array1 != null && array2 != null;
         int index1 = 0;
         int index2 = 0;
@@ -151,7 +87,7 @@ public class Exercise1_4 {
         }
     }
 
-    public static void exercise1_4_14() {
+    public void exercise1_4_14() {
         In in = new In("algs4-data/1Kints.txt");
         int[] array = in.readAllInts();
         Arrays.sort(array);
@@ -160,7 +96,7 @@ public class Exercise1_4 {
     }
 
     // 在 array 的 [lo, hi) 范围内，k 个数之和为 key 的总数量。 20866
-    private static int k_sum_count(int[] array, int lo, int hi, int k, int key) {
+    private int k_sum_count(int[] array, int lo, int hi, int k, int key) {
         assert k >= 2;
         int count = 0;
         if (k == 2) {
@@ -176,7 +112,7 @@ public class Exercise1_4 {
     }
 
     // 在 array 的 [lo, hi] 范围，key 的个数。
-    private static int rank_count(int[] array, int lo, int hi, int key) {
+    private int rank_count(int[] array, int lo, int hi, int key) {
         int left = rankLeft(array, lo, hi, key);
         int right = rankRight(array, lo, hi, key);
         if (left == -1 || right == -1) {
@@ -185,7 +121,7 @@ public class Exercise1_4 {
         return right - left + 1;
     }
 
-    private static int rankLeft(int[] array, int lo, int hi, int key) {
+    private int rankLeft(int[] array, int lo, int hi, int key) {
         while (lo <= hi) {
             int mid = lo + ((hi - lo) >> 1);
             if (key <= array[mid]) {
@@ -198,7 +134,7 @@ public class Exercise1_4 {
         return key == array[lo] ? lo : -1;
     }
 
-    private static int rankRight(int[] array, int lo, int hi, int key) {
+    private int rankRight(int[] array, int lo, int hi, int key) {
         while (lo <= hi) {
             int mid = lo + ((hi - lo) >> 1);
             if (key >= array[mid]) {
@@ -211,7 +147,7 @@ public class Exercise1_4 {
         return key == array[hi] ? hi : -1;
     }
 
-    public static void exercise1_4_15() {
+    public void exercise1_4_15() {
         In in = new In("algs4-data/1Kints.txt");
         int[] array = in.readAllInts();
         Arrays.sort(array);
@@ -219,7 +155,7 @@ public class Exercise1_4 {
         StdOut.println(ThreeSumOn2(array));
     }
 
-    private static int TwoSumFaster(int[] array) {
+    private int TwoSumFaster(int[] array) {
         int lo = 0;
         int hi = array.length - 1;
         int count = 0;
@@ -250,14 +186,14 @@ public class Exercise1_4 {
         return count;
     }
 
-    private static int combination(int n, int k) {
+    private int combination(int n, int k) {
         if (k == 0 || k == n) {
             return 1;
         }
         return combination(n - 1, k) + combination(n - 1, k - 1);
     }
 
-    private static int ThreeSumOn2(int[] array) {
+    private int ThreeSumOn2(int[] array) {
         int count = 0;
         for (int i = 0; i < array.length; i++) {
             int target = -array[i];
@@ -293,7 +229,7 @@ public class Exercise1_4 {
         return count;
     }
 
-    public static void exercise1_4_16() {
+    public void exercise1_4_16() {
         In in = new In("algs4-data/1Kints.txt");
         int[] array = in.readAllInts();
         Arrays.sort(array);
@@ -313,7 +249,7 @@ public class Exercise1_4 {
         }
     }
 
-    public static void exercise1_4_17() {
+    public void exercise1_4_17() {
         In in = new In("algs4-data/1Kints.txt");
         int[] array = in.readAllInts();
         int min = Integer.MAX_VALUE;
@@ -325,7 +261,7 @@ public class Exercise1_4 {
         StdOut.println(min + " " + max);
     }
 
-    public static void exercise1_4_18() {
+    public void exercise1_4_18() {
         In in = new In("algs4-data/1Kints.txt");
         int[] array = in.readAllInts();
         int index = partialMin(array);
@@ -333,7 +269,7 @@ public class Exercise1_4 {
         StdOut.println(array[index - 1] + " " + array[index] + " " + array[index + 1]);
     }
 
-    private static int partialMin(int[] array) {
+    private int partialMin(int[] array) {
         assert array != null && array.length > 0;
         int lo = 0;
         int hi = array.length - 1;
@@ -351,18 +287,18 @@ public class Exercise1_4 {
         return -1;
     }
 
-    public static void exercise1_4_19() {
+    public void exercise1_4_19() {
         // TODO
     }
 
-    public static void exercise1_4_20() {
+    public void exercise1_4_20() {
         int[] array = new int[]{1, 3, 5, 7, 9, 8, 6, 4, 2, 0};
         int key = StdIn.readInt();
         int index = bitonicSearch(array, key);
         StdOut.println(index);
     }
 
-    private static int bitonicSearch(int[] array, int key) {
+    private int bitonicSearch(int[] array, int key) {
         assert array != null && array.length > 0;
         if (key < array[0] && key < array[array.length - 1]) return -1;
         int maxIndex = partialMax(array);
@@ -374,7 +310,7 @@ public class Exercise1_4 {
         return -1;
     }
 
-    private static int partialMax(int[] array) {
+    private int partialMax(int[] array) {
         int lo = 0;
         int hi = array.length - 1;
         while (lo <= hi) {
@@ -391,7 +327,7 @@ public class Exercise1_4 {
         return -1;
     }
 
-    private static int bottomRank(int[] array, int key, int lo, int hi) {
+    private int bottomRank(int[] array, int key, int lo, int hi) {
         while (lo <= hi) {
             int mid = lo + ((hi - lo) >> 1);
             if (key < array[mid]) {
@@ -405,14 +341,14 @@ public class Exercise1_4 {
         return -1;
     }
 
-    public static void exercise1_4_22() {
+    public void exercise1_4_22() {
         In in = new In("algs4-data/1Kints.txt");
         int[] array = in.readAllInts();
         Arrays.sort(array);
         StdOut.println(BinarySearchFibonacci(array, 791849));
     }
 
-    private static int BinarySearchFibonacci(int[] array, int key) {
+    private int BinarySearchFibonacci(int[] array, int key) {
         assert array != null && array.length > 0;
         int lo = 0;
         int hi = array.length - 1;
@@ -444,11 +380,7 @@ public class Exercise1_4 {
         return -1;
     }
 
-    public static void exercise1_4_23() {
-        // TODO
-    }
-
-    public static void exercise1_4_24() {
+    public void exercise1_4_24() {
         int[] floors = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1};
         int F = throwEggLgN(floors);
         StdOut.println(F);
@@ -457,7 +389,7 @@ public class Exercise1_4 {
         StdOut.println(F);
     }
 
-    private static int throwEggLgN(int[] floors) {
+    private int throwEggLgN(int[] floors) {
         assert floors != null && floors.length > 0;
         int key = 1;
         int lo = 0;
@@ -474,7 +406,7 @@ public class Exercise1_4 {
         return key == floors[lo] ? lo : -1;
     }
 
-    private static int throwEggLgF(int[] floors) {
+    private int throwEggLgF(int[] floors) {
         int key = 1;
         int lo = 0;
         int hi = 1;
@@ -500,7 +432,7 @@ public class Exercise1_4 {
         return key == floors[lo] ? lo : -1;
     }
 
-    public static void exercise1_4_25() {
+    public void exercise1_4_25() {
         int[] floors = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1};
         int F = throw2EggsN(floors);
         StdOut.println(F);
@@ -509,7 +441,7 @@ public class Exercise1_4 {
         StdOut.println(F);
     }
 
-    private static int throw2EggsN(int[] floors) {
+    private int throw2EggsN(int[] floors) {
         assert floors != null && floors.length > 0;
         int lo = 0;
         int hi = floors.length - 1;
@@ -533,7 +465,7 @@ public class Exercise1_4 {
         return lo;
     }
 
-    private static int throw2EggsF(int[] floors) {
+    private int throw2EggsF(int[] floors) {
         assert floors != null && floors.length > 0;
         int firstEgg = (int) Math.sqrt(floors.length);
         int secondEgg = 0;
@@ -558,7 +490,7 @@ public class Exercise1_4 {
         return secondEgg;
     }
 
-    public static void exercise1_4_27() {
+    public void exercise1_4_27() {
         QueueWithTwoStacks<Integer> queue = new QueueWithTwoStacks<>();
         for (int i = 0; i < 5; i++) {
             queue.enqueue(i);
@@ -577,38 +509,7 @@ public class Exercise1_4 {
         }
     }
 
-    private static class QueueWithTwoStacks<Item> {
-        private final Stack<Item> stack1;
-        private final Stack<Item> stack2;
-
-        QueueWithTwoStacks() {
-            stack1 = new Stack<>();
-            stack2 = new Stack<>();
-        }
-
-        public void enqueue(Item item) {
-            while (!stack2.isEmpty()) {
-                stack1.push(stack2.pop());
-            }
-            stack1.push(item);
-        }
-
-        public Item dequeue() {
-            if (isEmpty()) return null;
-            if (stack2.isEmpty()) {
-                while (!stack1.isEmpty()) {
-                    stack2.push(stack1.pop());
-                }
-            }
-            return stack2.pop();
-        }
-
-        public boolean isEmpty() {
-            return stack1.isEmpty() && stack2.isEmpty();
-        }
-    }
-
-    public static void exercise1_4_28() {
+    public void exercise1_4_28() {
         StackWithAQueue<Integer> stack = new StackWithAQueue<>();
         for (int i = 0; i < 5; i++) {
             stack.push(i);
@@ -627,29 +528,7 @@ public class Exercise1_4 {
         }
     }
 
-    private static class StackWithAQueue<Item> {
-        private final Queue<Item> queue = new Queue<>();
-
-        public void push(Item item) {
-            queue.enqueue(item);
-        }
-
-        public Item pop() {
-            if (isEmpty()) return null;
-            int size = queue.size();
-            while (size > 1) {
-                queue.enqueue(queue.dequeue());
-                size--;
-            }
-            return queue.dequeue();
-        }
-
-        public boolean isEmpty() {
-            return queue.isEmpty();
-        }
-    }
-
-    public static void exercise1_4_29() {
+    public void exercise1_4_29() {
         StequeWithTwoStacks<Integer> steque = new StequeWithTwoStacks<>();
         for (int i = 0; i < 5; i++) {
             steque.push(i);
@@ -664,41 +543,14 @@ public class Exercise1_4 {
         }
     }
 
-    private static class StequeWithTwoStacks<Item> {
-        private final Stack<Item> stack1 = new Stack<>();
-        private final Stack<Item> stack2 = new Stack<>();
-
-        public void push(Item item) {
-            stack1.push(item);
-        }
-
-        public Item pop() {
-            if (isEmpty()) return null;
-            if (stack1.isEmpty()) {
-                while (!stack2.isEmpty()) {
-                    stack1.push(stack2.pop());
-                }
-            }
-            return stack1.pop();
-        }
-
-        public void enqueue(Item item) {
-            stack2.push(item);
-        }
-
-        public boolean isEmpty() {
-            return stack1.isEmpty() && stack2.isEmpty();
-        }
-    }
-
-    public static void exercise1_4_34() {
+    public void exercise1_4_34() {
         int secret = 5;
         int N = 30;
         int answer = HotOrCold(secret, N);
         StdOut.println(answer == secret);
     }
 
-    private static int HotOrCold(int secret, int N) {
+    private int HotOrCold(int secret, int N) {
         assert N > 0;
         int lo = 1;
         int hi = N;
@@ -719,14 +571,14 @@ public class Exercise1_4 {
         return -1;
     }
 
-    public static void exercise1_4_38() {
+    public void exercise1_4_38() {
         for (int N = 250; true; N += N) {
             double time = timeTrial(N);
             StdOut.printf("%7d %5.1f\n", N, time);
         }
     }
 
-    private static double timeTrial(int N) {
+    private double timeTrial(int N) {
         int MAX = 1000000;
         int[] a = new int[N];
         for (int i = 0; i < N; i++) {
@@ -737,11 +589,11 @@ public class Exercise1_4 {
         return timer.elapsedTime();
     }
 
-    private static int native3sum(int[] a) {
+    private int native3sum(int[] a) {
         int N = a.length;
         int cnt = 0;
         for (int i = 0; i < N; i++)
-            for(int j = 0; j < N; j++)
+            for (int j = 0; j < N; j++)
                 for (int k = 0; k < N; k++)
                     if (i < j && j < k)
                         cnt++;
@@ -749,42 +601,189 @@ public class Exercise1_4 {
     }
 
     public static void main(String[] args) {
-//        exercise1_4_2();
+        Exercise1_4 runner = new Exercise1_4();
 
-//        exercise1_4_8();
+//        runner.exercise1_4_2();
 
-//        exercise1_4_10();
+//        runner.exercise1_4_8();
 
-//        exercise1_4_11();
+//        runner.exercise1_4_10();
 
-//        exercise1_4_12();
+//        runner.exercise1_4_11();
 
-//        exercise1_4_14();
+//        runner.exercise1_4_12();
 
-//        exercise1_4_15();
+//        runner.exercise1_4_14();
 
-//        exercise1_4_16();
+//        runner.exercise1_4_15();
 
-//        exercise1_4_17();
+//        runner.exercise1_4_16();
 
-//        exercise1_4_18();
+//        runner.exercise1_4_17();
 
-//        exercise1_4_20();
+//        runner.exercise1_4_18();
 
-//        exercise1_4_22();
+//        runner.exercise1_4_20();
 
-//        exercise1_4_24();
+//        runner.exercise1_4_22();
 
-//        exercise1_4_25();
+//        runner.exercise1_4_24();
 
-//        exercise1_4_27();
+//        runner.exercise1_4_25();
 
-//        exercise1_4_28();
+//        runner.exercise1_4_27();
 
-//        exercise1_4_29();
+//        runner.exercise1_4_28();
 
-//        exercise1_4_34();
+//        runner.exercise1_4_29();
 
-        exercise1_4_38();
+//        runner.exercise1_4_34();
+
+        runner.exercise1_4_38();
+    }
+}
+
+
+class StaticSETofInts {
+    private final int[] a;
+
+    public StaticSETofInts(int[] keys) {
+        a = new int[keys.length];
+        // defensive copy
+        System.arraycopy(keys, 0, a, 0, keys.length);
+        Arrays.sort(a);
+    }
+
+    public boolean contains(int key) {
+        return rank(key) != -1;
+    }
+
+    public int howMany(int key) {
+        int low = rankLow(key);
+        int high = rankHigh(key);
+        if (low == -1 || high == -1) return -1;
+        return high - low + 1;
+    }
+
+    private int rankLow(int key) {
+        int lo = 0;
+        int hi = a.length - 1;
+        while (lo <= hi) {
+            int mid = lo + ((hi - lo) >> 1);
+            if (key <= a[mid]) {
+                hi = mid - 1;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        if (lo == a.length) return -1;
+        return a[lo] == key ? lo : -1;
+    }
+
+    private int rankHigh(int key) {
+        int lo = 0;
+        int hi = a.length - 1;
+        while (lo <= hi) {
+            int mid = lo + ((hi - lo) >> 1);
+            if (key >= a[mid]) {
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        if (hi == -1) return -1;
+        return a[hi] == key ? hi : -1;
+    }
+
+    private int rank(int key) {  // Binary search.
+        int lo = 0;
+        int hi = a.length - 1;
+        while (lo <= hi) {  // Key is in a[lo..hi] or not present.
+            int mid = lo + (hi - lo) / 2;
+            if (key < a[mid]) hi = mid - 1;
+            else if (key > a[mid]) lo = mid + 1;
+            else return mid;
+        }
+        return -1;
+    }
+}
+
+class QueueWithTwoStacks<Item> {
+    private final Stack<Item> stack1;
+    private final Stack<Item> stack2;
+
+    QueueWithTwoStacks() {
+        stack1 = new Stack<>();
+        stack2 = new Stack<>();
+    }
+
+    public void enqueue(Item item) {
+        while (!stack2.isEmpty()) {
+            stack1.push(stack2.pop());
+        }
+        stack1.push(item);
+    }
+
+    public Item dequeue() {
+        if (isEmpty()) return null;
+        if (stack2.isEmpty()) {
+            while (!stack1.isEmpty()) {
+                stack2.push(stack1.pop());
+            }
+        }
+        return stack2.pop();
+    }
+
+    public boolean isEmpty() {
+        return stack1.isEmpty() && stack2.isEmpty();
+    }
+}
+
+class StackWithAQueue<Item> {
+    private final Queue<Item> queue = new Queue<>();
+
+    public void push(Item item) {
+        queue.enqueue(item);
+    }
+
+    public Item pop() {
+        if (isEmpty()) return null;
+        int size = queue.size();
+        while (size > 1) {
+            queue.enqueue(queue.dequeue());
+            size--;
+        }
+        return queue.dequeue();
+    }
+
+    public boolean isEmpty() {
+        return queue.isEmpty();
+    }
+}
+
+class StequeWithTwoStacks<Item> {
+    private final Stack<Item> stack1 = new Stack<>();
+    private final Stack<Item> stack2 = new Stack<>();
+
+    public void push(Item item) {
+        stack1.push(item);
+    }
+
+    public Item pop() {
+        if (isEmpty()) return null;
+        if (stack1.isEmpty()) {
+            while (!stack2.isEmpty()) {
+                stack1.push(stack2.pop());
+            }
+        }
+        return stack1.pop();
+    }
+
+    public void enqueue(Item item) {
+        stack2.push(item);
+    }
+
+    public boolean isEmpty() {
+        return stack1.isEmpty() && stack2.isEmpty();
     }
 }

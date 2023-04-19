@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Exercise1_1 {
-    public static void exercise1_1_3() {
+    public void exercise1_1_3() {
         int a = StdIn.readInt();
         int b = StdIn.readInt();
         int c = StdIn.readInt();
@@ -18,19 +18,19 @@ public class Exercise1_1 {
         }
     }
 
-    public static void exercise1_1_5(double x, double y) {
+    public void exercise1_1_5(double x, double y) {
         StdOut.print(0.0 <= x && x <= 1.0 && 0.0 <= y && y <= 1.0);
     }
 
-    public static String exercise1_1_9(int N) {
-        String s = "";
+    public String exercise1_1_9(int N) {
+        StringBuilder s = new StringBuilder();
         for (int n = N; n > 0; n /= 2) {
-            s = (n % 2) + s;
+            s.insert(0, (n % 2));
         }
-        return s;
+        return s.toString();
     }
 
-    public static void exercise1_1_11(boolean[][] metric) {
+    public void exercise1_1_11(boolean[][] metric) {
         if (metric == null || metric.length == 0 || metric[0].length == 0) return;
         StdOut.print("\t");
         for (int i = 0; i < metric[0].length; i++) {
@@ -50,7 +50,7 @@ public class Exercise1_1 {
         }
     }
 
-    public static void exercise1_1_13(int[][] metric) {
+    public void exercise1_1_13(int[][] metric) {
         if (metric == null) return;
         int N = metric[0].length;
         for (int i = 0; i < N; i++) {
@@ -61,7 +61,7 @@ public class Exercise1_1 {
         }
     }
 
-    public static int exercise1_1_14(int N) {
+    public int exercise1_1_14(int N) {
         if (N < 1) {
             throw new IllegalArgumentException();
         }
@@ -74,7 +74,7 @@ public class Exercise1_1 {
         return x - 1;
     }
 
-    public static int[] exercise1_1_15(int[] a, int M) {
+    public int[] exercise1_1_15(int[] a, int M) {
         int[] result = new int[M];
         for (int i = 0; i < M; i++) {
             int count = 0;
@@ -88,7 +88,7 @@ public class Exercise1_1 {
         return result;
     }
 
-    public static int exercise1_1_19(int N) {
+    public int exercise1_1_19(int N) {
         if (N == 0 || N == 1) {
             return N;
         }
@@ -101,18 +101,18 @@ public class Exercise1_1 {
         return fibonacci[N];
     }
 
-    public static double exercise1_1_20(int N) {
+    public double exercise1_1_20(int N) {
         return Math.log(factorial(N));
     }
 
-    private static int factorial(int N) {
+    private int factorial(int N) {
         if (N == 0 || N == 1) {
             return 1;
         }
         return factorial(N - 1) * N;
     }
 
-    private static void exercise1_1_21() {
+    public void exercise1_1_21() {
         String[] strings = StdIn.readAllLines();
         for (String s : strings) {
             String[] record = s.split(" ");
@@ -122,17 +122,17 @@ public class Exercise1_1 {
         }
     }
 
-    public static void exercise1_1_22() {
+    public void exercise1_1_22() {
         int[] a = {10, 11, 12, 16, 18, 23, 29, 33, 48, 54, 57, 68, 77, 84, 98};
         StdOut.println(rank1_1_22(23, a));
         StdOut.println(rank1_1_22(50, a));
     }
 
-    public static int rank1_1_22(int key, int[] a) {
+    public int rank1_1_22(int key, int[] a) {
         return rank1_1_22(key, a, 0, a.length - 1, 1);
     }
 
-    public static int rank1_1_22(int key, int[] a, int lo, int hi, int depth) {
+    public int rank1_1_22(int key, int[] a, int lo, int hi, int depth) {
         for (int i = 0; i < depth; i++) {
             StdOut.print("\t");
         }
@@ -144,7 +144,7 @@ public class Exercise1_1 {
         else return mid;
     }
 
-    public static void exercise1_1_23(String[] args) {
+    public void exercise1_1_23(String[] args) {
         int[] whitelist = new In(args[0]).readAllInts();
         In in = new In(args[2]);
         Arrays.sort(whitelist);
@@ -158,11 +158,11 @@ public class Exercise1_1 {
         }
     }
 
-    public static int rank1_1_23(int key, int[] a) {
+    public int rank1_1_23(int key, int[] a) {
         return rank1_1_23(key, a, 0, a.length - 1);
     }
 
-    public static int rank1_1_23(int key, int[] a, int lo, int hi) {
+    public int rank1_1_23(int key, int[] a, int lo, int hi) {
         if (lo > hi) return -1;
         int mid = lo + (hi - lo) / 2;
         if (a[mid] < key) return rank1_1_23(key, a, mid + 1, hi);
@@ -170,33 +170,31 @@ public class Exercise1_1 {
         else return mid;
     }
 
-    public static void exercise1_1_24() {
+    public void exercise1_1_24() {
         StdOut.println(Euclid(1111111, 1234567));
     }
 
-    private static int Euclid(int p, int q) {
+    private int Euclid(int p, int q) {
         StdOut.println("p=" + p + " q=" + q);
         if (q == 0) return p;
         int r = p % q;
         return Euclid(q, r);
     }
 
-    public static void exercise1_1_27() {
+    public void exercise1_1_27() {
         StdOut.println(binomial(100, 50, 0.25));
     }
 
-    public static double binomial(int N, int k, double p) {
+    public double binomial(int N, int k, double p) {
         double[][] arrP = new double[N + 1][k + 1];
         for (int i = 0; i < N + 1; i++) {
-            for (int j = 0; j < k + 1; j++) {
-                arrP[i][j] = -1.0;
-            }
+            Arrays.fill(arrP[i], -1.0);
         }
         arrP[0][0] = 1.0;
         return binomial(N, k, p, arrP);
     }
 
-    private static double binomial(int N, int k, double p, double[][] arrP) {
+    private double binomial(int N, int k, double p, double[][] arrP) {
         if (N < 0 || k < 0) return 0d;
         if (arrP[N][k] == -1.0) {
             arrP[N][k] = (1.0 - p) * binomial(N - 1, k, p, arrP) + p * binomial(N - 1, k - 1, p, arrP);
@@ -204,7 +202,7 @@ public class Exercise1_1 {
         return arrP[N][k];
     }
 
-    public static void exercise1_1_28(String[] args) {
+    public void exercise1_1_28(String[] args) {
         int[] whitelist = new In(args[0]).readAllInts();
         Arrays.sort(whitelist);
         ArrayList<Integer> list = new ArrayList<>();
@@ -219,7 +217,7 @@ public class Exercise1_1 {
         }
     }
 
-    public static void exercise1_1_29() {
+    public void exercise1_1_29() {
         String path = "algs4-data/tinyT.txt";
         int[] whitelist = new In(path).readAllInts();
         Arrays.sort(whitelist);
@@ -227,7 +225,7 @@ public class Exercise1_1 {
         StdOut.println(count1_1_29(77, whitelist));
     }
 
-    public static int rank1_1_29(int key, int[] a) {
+    public int rank1_1_29(int key, int[] a) {
         int index = rank1_1_23(key, a);
         if (index == -1) return index;
         while (index >= 0 && key == a[index]) {
@@ -236,7 +234,7 @@ public class Exercise1_1 {
         return index + 1;
     }
 
-    public static int count1_1_29(int key, int[] a) {
+    public int count1_1_29(int key, int[] a) {
         int index = rank1_1_29(key, a);
         int count = 0;
         if (index == -1) return count;
@@ -247,7 +245,7 @@ public class Exercise1_1 {
         return count;
     }
 
-    public static void exercise1_1_30(int N) {
+    public void exercise1_1_30(int N) {
         boolean[][] arr = new boolean[N][N];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
@@ -262,7 +260,7 @@ public class Exercise1_1 {
         }
     }
 
-    public static void exercise1_1_31(int N, double p) {
+    public void exercise1_1_31(int N, double p) {
         StdDraw.circle(0.5, 0.5, 0.5);
         Point1_1_31[] points = new Point1_1_31[N];
         double angle = 2 * Math.PI / N;
@@ -284,17 +282,7 @@ public class Exercise1_1 {
         }
     }
 
-    static class Point1_1_31 {
-        double x;
-        double y;
-
-        public Point1_1_31(double x, double y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
-    public static void exercise1_1_32(int N, double l, double r) {
+    public void exercise1_1_32(int N, double l, double r) {
         double[] values = StdIn.readAllDoubles();
         int[] count = new int[N];
 
@@ -321,7 +309,7 @@ public class Exercise1_1 {
         }
     }
 
-    public static void exercise1_1_33() {
+    public void exercise1_1_33() {
         StdOut.println("double dot(double[] x, double[] y):");
         double[] x = new double[]{1.2, 2.4, 4.8};
         double[] y = new double[]{3.2, 2.1, 1.0};
@@ -364,78 +352,7 @@ public class Exercise1_1 {
         StdOut.println();
     }
 
-    static class Matrix {
-        static double dot(double[] x, double[] y) {
-            if (x == null || y == null || x.length != y.length) {
-                throw new IllegalArgumentException();
-            }
-            double result = 0d;
-            for (int i = 0; i < x.length; i++) {
-                result += x[i] * y[i];
-            }
-            return result;
-        }
-
-        static double[][] mult(double[][] a, double[][] b) {
-            if (a == null || b == null || a.length == 0 || b.length == 0 || a[0].length != b.length) {
-                throw new IllegalArgumentException();
-            }
-
-            double[][] result = new double[a.length][b[0].length];
-            for (int i = 0; i < a.length; i++) {
-                for (int j = 0; j < b[0].length; j++) {
-                    for (int k = 0; k < a[0].length; k++) {
-                        result[i][j] += a[i][k] * b[k][j];
-                    }
-                }
-            }
-            return result;
-        }
-
-        static double[][] transpose(double[][] a) {
-            if (a == null || a.length == 0 || a[0].length == 0) {
-                throw new IllegalArgumentException();
-            }
-
-            double[][] result = new double[a[0].length][a.length];
-            for (int i = 0; i < a[0].length; i++) {
-                for (int j = 0; j < a.length; j++) {
-                    result[i][j] = a[j][i];
-                }
-            }
-            return result;
-        }
-
-        static double[] mult(double[][] a, double[] x) {
-            if (a == null || x == null || a.length == 0 || a[0].length != x.length) {
-                throw new IllegalArgumentException();
-            }
-
-            double[] result = new double[a.length];
-            for (int i = 0; i < a.length; i++) {
-                for (int j = 0; j < x.length; j++) {
-                    result[i] += a[i][j] * x[j];
-                }
-            }
-            return result;
-        }
-
-        static double[] mult(double[] y, double[][] a) {
-            if (y == null || a == null || y.length != a.length) {
-                throw new IllegalArgumentException();
-            }
-
-            double[] result = new double[y.length];
-            for (int i = 0; i < y.length; i++) {
-                for (int j = 0; j < a.length; j++) {
-                    result[i] += y[i] * a[i][j];
-                }
-            }
-            return result;
-        }
-    }
-
-    public static void exercise1_1_36() {
+    public void exercise1_1_36() {
         int M = StdIn.readInt();
         int N = StdIn.readInt();
 
@@ -458,13 +375,13 @@ public class Exercise1_1 {
         }
     }
 
-    public static void initializeArray(double[] a) {
+    public void initializeArray(double[] a) {
         for (int i = 0; i < a.length; i++) {
             a[i] = i;
         }
     }
 
-    public static void exercise1_1_37() {
+    public void exercise1_1_37() {
         int M = StdIn.readInt();
         int N = StdIn.readInt();
 
@@ -487,7 +404,7 @@ public class Exercise1_1 {
         }
     }
 
-    public static void shuffle1_1_37(double[] a) {
+    public void shuffle1_1_37(double[] a) {
         int n = a.length;
         for (int i = 0; i < n; i++) {
             int r = StdRandom.uniformInt(n - 1);
@@ -497,7 +414,7 @@ public class Exercise1_1 {
         }
     }
 
-    public static void exercise1_1_38() {
+    public void exercise1_1_38() {
         int key = 54467079;
         int[] arr = new In("algs4-data/largeT.txt").readAllInts();
 
@@ -517,7 +434,7 @@ public class Exercise1_1 {
         StdOut.println("time:" + binarySearchTime + "(ms)");
     }
 
-    public static int BruteForceSearch(int key, int[] a) {
+    public int BruteForceSearch(int key, int[] a) {
         for (int i = 0; i < a.length; i++) {
             if (a[i] == key) {
                 return i;
@@ -526,7 +443,7 @@ public class Exercise1_1 {
         return -1;
     }
 
-    public static void exercise1_1_39() {
+    public void exercise1_1_39() {
         int T = StdIn.readInt();
         int[] N = {1000, 10000, 100000, 1000000};
         int[][] totalCount = new int[T][4];
@@ -564,7 +481,7 @@ public class Exercise1_1 {
 
     }
 
-    public static int[] randomArray(int n) {
+    public int[] randomArray(int n) {
         int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
             arr[i] = StdRandom.uniformInt(100000, 1000000);
@@ -574,11 +491,13 @@ public class Exercise1_1 {
     }
 
     public static void main(String[] args) {
-//        exercise1_1_3();
+        Exercise1_1 runner = new Exercise1_1();
 
-//        exercise1_1_5(0.2, 0.3);
+//        runner.exercise1_1_3();
 
-//        StdOut.print(exercise1_1_9(20));
+//        runner.exercise1_1_5(0.2, 0.3);
+
+//        StdOut.print(runner.exercise1_1_9(20));
 
 //        boolean[][] b = {
 //                {true, true, false, false},
@@ -586,60 +505,143 @@ public class Exercise1_1 {
 //                {true, false, true, false},
 //                {false, true, false, true}
 //        };
-//        exercise1_1_11(b);
+//        runner.exercise1_1_11(b);
 
 //        int[][] metric = {
 //                {1, 2, 3, 4},
 //                {5, 6, 7, 8},
 //                {9, 10, 11, 12}
 //        };
-//        exercise1_1_13(metric);
+//        runner.exercise1_1_13(metric);
 
-//        StdOut.print(exercise1_1_14(10));
+//        StdOut.print(runner.exercise1_1_14(10));
 
 //        int[] a = {1, 2, 3, 1, 2};
-//        int[] result = exercise1_1_15(a, 5);
-//        for (int i = 0; i < result.length; i++) {
-//            StdOut.print(result[i] + " ");
+//        int[] result = runner.exercise1_1_15(a, 5);
+//        for (int j : result) {
+//            StdOut.print(j + " ");
 //        }
 
-//        StdOut.print(exercise1_1_19(10));
+//        StdOut.print(runner.exercise1_1_19(10));
 
-//        StdOut.print(exercise1_1_20(10));
+//        StdOut.print(runner.exercise1_1_20(10));
 
-//        exercise1_1_21();
+//        runner.exercise1_1_21();
 
-//        exercise1_1_22();
+//        runner.exercise1_1_22();
 
 //        String[] args1_1_23 = {"algs4-data/tinyW.txt", "+", "algs4-data/tinyT.txt"};
-//        exercise1_1_23(args1_1_23);
+//        runner.exercise1_1_23(args1_1_23);
 //        StdOut.println();
 //        args1_1_23 = new String[]{"algs4-data/tinyW.txt", "-", "algs4-data/tinyT.txt"};
-//        exercise1_1_23(args1_1_23);
+//        runner.exercise1_1_23(args1_1_23);
 
-//        exercise1_1_24();
+//        runner.exercise1_1_24();
 
-//        exercise1_1_27();
+//        runner.exercise1_1_27();
 
 //        String[] args1_1_28 = {"algs4-data/tinyW.txt"};
-//        exercise1_1_28(args1_1_28);
+//        runner.exercise1_1_28(args1_1_28);
 
-//        exercise1_1_29();
+//        runner.exercise1_1_29();
 
-//        exercise1_1_30(5);
+//        runner.exercise1_1_30(5);
 
-//        exercise1_1_31(5, 0.5);
+//        runner.exercise1_1_31(5, 0.5);
 
-//        exercise1_1_32(5, 0.5, 1.8);
+//        runner.exercise1_1_32(5, 0.5, 1.8);
 
-//        exercise1_1_33();
+//        runner.exercise1_1_33();
 
-//        exercise1_1_36();
+//        runner.exercise1_1_36();
 
-//        exercise1_1_37();
+//        runner.exercise1_1_37();
 
-//        exercise1_1_38();
+//        runner.exercise1_1_38();
 
-        exercise1_1_39();
+        runner.exercise1_1_39();
+    }
+}
+
+
+class Point1_1_31 {
+    double x;
+    double y;
+
+    public Point1_1_31(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+
+class Matrix {
+    public static double dot(double[] x, double[] y) {
+        if (x == null || y == null || x.length != y.length) {
+            throw new IllegalArgumentException();
+        }
+        double result = 0d;
+        for (int i = 0; i < x.length; i++) {
+            result += x[i] * y[i];
+        }
+        return result;
+    }
+
+    public static double[][] mult(double[][] a, double[][] b) {
+        if (a == null || b == null || a.length == 0 || b.length == 0 || a[0].length != b.length) {
+            throw new IllegalArgumentException();
+        }
+
+        double[][] result = new double[a.length][b[0].length];
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < b[0].length; j++) {
+                for (int k = 0; k < a[0].length; k++) {
+                    result[i][j] += a[i][k] * b[k][j];
+                }
+            }
+        }
+        return result;
+    }
+
+    public static double[][] transpose(double[][] a) {
+        if (a == null || a.length == 0 || a[0].length == 0) {
+            throw new IllegalArgumentException();
+        }
+
+        double[][] result = new double[a[0].length][a.length];
+        for (int i = 0; i < a[0].length; i++) {
+            for (int j = 0; j < a.length; j++) {
+                result[i][j] = a[j][i];
+            }
+        }
+        return result;
+    }
+
+    public static double[] mult(double[][] a, double[] x) {
+        if (a == null || x == null || a.length == 0 || a[0].length != x.length) {
+            throw new IllegalArgumentException();
+        }
+
+        double[] result = new double[a.length];
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < x.length; j++) {
+                result[i] += a[i][j] * x[j];
+            }
+        }
+        return result;
+    }
+
+    public static double[] mult(double[] y, double[][] a) {
+        if (y == null || a == null || y.length != a.length) {
+            throw new IllegalArgumentException();
+        }
+
+        double[] result = new double[y.length];
+        for (int i = 0; i < y.length; i++) {
+            for (int j = 0; j < a.length; j++) {
+                result[i] += y[i] * a[i][j];
+            }
+        }
+        return result;
     }
 }
