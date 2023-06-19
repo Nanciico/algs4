@@ -14,8 +14,8 @@ public class Exercise2_1 {
                 "S", "O", "R", "T",
                 "Q", "U", "E", "S", "T", "I", "O", "N"
         };
-        ShellSortKeepArray.sort(a);
-        ShellSortKeepArray.show(a);
+        ShellSortKeepIncrementSequence.sort(a);
+        ShellSortKeepIncrementSequence.show(a);
     }
 
     public void exercise2_1_12() {
@@ -41,6 +41,7 @@ public class Exercise2_1 {
     public void exercise2_1_17() {
         Double[] a = RandomGenerator.generateRandomDoubles(100);
         SelectionSortAnimation.sort(a);
+        StdOut.println(SortUtil.isSorted(a));
     }
 
     public void exercise2_1_19() {
@@ -49,6 +50,7 @@ public class Exercise2_1 {
             a[i] = 100 - i;
         }
         ShellSortRecordCompare.sort(a);
+        StdOut.println(SortUtil.isSorted(a));
     }
 
     public void exercise2_1_20() {
@@ -57,6 +59,7 @@ public class Exercise2_1 {
             a[i] = i + 1;
         }
         ShellSortRecordCompare.sort(a);
+        StdOut.println(SortUtil.isSorted(a));
     }
 
     public void exercise2_1_24() {
@@ -102,6 +105,13 @@ public class Exercise2_1 {
         }
     }
 
+    public void exercise2_1_30() {
+        for (int length = 128; length < 9999999; length *= 2) {
+            String[] args = new String[]{"ShellHighPerformance", "Shell", String.valueOf(length), "10"};
+            SortCompare.compare(args);
+        }
+    }
+
     public static void main(String[] args) {
         Exercise2_1 runner = new Exercise2_1();
 
@@ -123,7 +133,9 @@ public class Exercise2_1 {
 
 //        runner.exercise2_1_26();
 
-        runner.exercise2_1_27();
+//        runner.exercise2_1_27();
+
+        runner.exercise2_1_30();
     }
 }
 
@@ -138,7 +150,7 @@ class RandomGenerator {
 
     public static int[] generateRandomPrimitiveInteger(int n) {
         int[] ints = new int[n];
-        int max = 100000;
+        int max = 10000;
         for (int i = 0; i < n; i++) {
             ints[i] = StdRandom.uniformInt(-max, max);
         }
@@ -147,11 +159,36 @@ class RandomGenerator {
 
     public static Integer[] generateRandomInteger(int n) {
         Integer[] integers = new Integer[n];
-        int max = 100000;
+        int max = 10000;
         for (int i = 0; i < n; i++) {
             integers[i] = StdRandom.uniformInt(-max, max);
         }
         return integers;
+    }
+}
+
+class SortUtil {
+    public static boolean less(Comparable v, Comparable w) {
+        return v.compareTo(w) < 0;
+    }
+
+    public static void exch(Comparable[] a, int i, int j) {
+        Comparable temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
+    public static void show(Comparable[] a) {
+        for (int i = 0; i < a.length; i++)
+            StdOut.print(a[i] + " ");
+        StdOut.println();
+    }
+
+    public static boolean isSorted(Comparable[] a) {
+        for (int i = 1; i < a.length; i++) {
+            if (less(a[i], a[i - 1])) return false;
+        }
+        return true;
     }
 }
 
@@ -163,6 +200,7 @@ class SortCompare {
         if (alg.equals("InsertionWithoutExchange")) InsertionSortWithoutExchange.sort(a);
         if (alg.equals("Selection")) Selection.sort(a);
         if (alg.equals("Shell")) Shell.sort(a);
+        if (alg.equals("ShellHighPerformance")) ShellSortHighPerformanceIncrementSequence.sort(a);
         return timer.elapsedTime();
     }
 
@@ -189,11 +227,11 @@ class SortCompare {
     }
 }
 
-class ShellSortKeepArray {
+class ShellSortKeepIncrementSequence {
     public static void sort(Comparable[] a) {
         int n = a.length;
-        int[] arrayH = getArrayH(n);
-        for (int h : arrayH) {
+        int[] incrementSequence = getIncrementSequence(n);
+        for (int h : incrementSequence) {
             for (int i = h; i < n; i++) {
                 for (int j = i; j >= h && less(a[j], a[j - h]); j -= h) {
                     exch(a, j, j - h);
@@ -202,15 +240,14 @@ class ShellSortKeepArray {
         }
     }
 
-    private static int[] getArrayH(int n) {
+    private static int[] getIncrementSequence(int n) {
         int size = (int) (Math.log(2 * n + 1) / Math.log(3));
-        int[] arrayH = new int[size];
-        int h = 0;
-        for (int i = size - 1; i >= 0; i--) {
+        int[] incrementSequence = new int[size];
+        for (int h = 0, i = size - 1; i >= 0; i--) {
             h = 3 * h + 1;
-            arrayH[i] = h;
+            incrementSequence[i] = h;
         }
-        return arrayH;
+        return incrementSequence;
     }
 
     private static boolean less(Comparable v, Comparable w) {
@@ -356,8 +393,8 @@ class InsertionSortWithoutExchange {
         int n = a.length;
         for (int i = 1; i < n; i++) {
             Comparable value = a[i];
-            int j = i;
-            for (; j > 0 && less(value, a[j - 1]); j--) {
+            int j;
+            for (j = i; j > 0 && less(value, a[j - 1]); j--) {
                 a[j] = a[j - 1];
             }
             a[j] = value;
@@ -389,6 +426,46 @@ class InsertionSortPrimitive {
 
     private static void exch(int[] a, int i, int j) {
         int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+}
+
+class ShellSortHighPerformanceIncrementSequence {
+    public static void sort(Comparable[] a) {
+        int n = a.length;
+        Stack<Integer> incrementSequence = getIncrementSequence(n);
+        while (!incrementSequence.isEmpty()) {
+            int h = incrementSequence.pop();
+            for (int i = h; i < n; i++) {
+                for (int j = i; j >= h && less(a[j], a[j - h]); j -= h) {
+                    exch(a, j, j - h);
+                }
+            }
+        }
+    }
+
+    private static Stack<Integer> getIncrementSequence(int n) {
+        Stack<Integer> sequence = new Stack<>();
+        int value = -1;
+        int k = 0;
+        while (true) {
+            value = (int) (9 * Math.pow(4, k) - 9 * Math.pow(2, k) + 1);
+            if (value < n) sequence.push(value);
+            value = (int) (Math.pow(4, k + 2) - 3 * Math.pow(2, k + 2) + 1);
+            if (value < n) sequence.push(value);
+            if (value >= n) break;
+            k++;
+        }
+        return sequence;
+    }
+
+    private static boolean less(Comparable v, Comparable w) {
+        return v.compareTo(w) < 0;
+    }
+
+    private static void exch(Comparable[] a, int i, int j) {
+        Comparable temp = a[i];
         a[i] = a[j];
         a[j] = temp;
     }

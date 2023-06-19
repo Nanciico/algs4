@@ -3,3 +3,4 @@
 out
 src/algs4-data
 *.iml
+.DS_Store
