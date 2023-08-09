@@ -1,6 +1,5 @@
 package exercise2;
 
-import com.sun.security.auth.callback.TextCallbackHandler;
 import edu.princeton.cs.algs4.*;
 
 public class Exercise2_4 {
